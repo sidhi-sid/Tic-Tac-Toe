@@ -18,6 +18,13 @@ export default class Game extends React.Component{
         const history=this.state.history
         const current=history[history.length-1]
         const squares=current.squares
+        const winner=calculatewinner(squares)
+
+        if(winner || squares[i]){
+            
+            return
+        }
+        
         squares[i]=this.state.xisnext?'X':'0'
         this.setState({
             history:history.concat({
@@ -30,14 +37,26 @@ export default class Game extends React.Component{
 
 
     //passing prop named value in the board component
-    render(){
+    render(i){
         const history=this.state.history
         const current=history[this.state.stepno]
-
+        let status 
+        let tie
+        const winner=calculatewinner(current.squares)
+        if(winner){
+            status="Congratulations, Winner is "+ winner;
+        }
+        else{
+            status="Next player is "+(this.state.xisnext?'X':'0')
+        }
+        
         return(
             <div className="game">
                 <div className="game-board">
                 <Board clickaction={(i)=>this.handleclick(i)} squares={current.squares}/> 
+                </div>
+                <div class="game-info">
+                    <div>{status}</div>
                 </div>
             </div>  
         )
@@ -64,3 +83,4 @@ function calculatewinner(squares){
     }
     return null
 }
+
