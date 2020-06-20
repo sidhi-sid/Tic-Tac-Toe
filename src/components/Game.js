@@ -14,25 +14,28 @@ export default class Game extends React.Component{
         }
     }
 
-    changestate=()=>{
+    handleclick=(i)=>{
+        const history=this.state.history
+        const current=history[history.length-1]
+        const squares=current.squares
+        squares[i]=this.state.xisnext?'X':'0'
         this.setState({
-            value:6
+            history:history.concat({
+                squares:squares
+            }),
+            xisnext:!this.state.xisnext,
+            stepno:history.length
         })
     }
 
-    somefn=()=>{
-        return 5
-    }
 
     //passing prop named value in the board component
     render(){
-        console.log(this.state)
-        const result=this.somefn()
+
         return(
             <div className="game">
                 <div className="game-board">
-                <Board value={result}/> 
-                <button onClick={()=>this.changestate()}>Click Me!!</button>
+                <Board/> 
                 </div>
             </div>  
         )
